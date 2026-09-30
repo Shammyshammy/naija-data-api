@@ -6,7 +6,7 @@ use App\Http\Controllers\Api\V1\StateController;
 use App\Http\Responses\ApiResponse;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('v1')->group(function () {
+Route::prefix('v1')->middleware('cache.api:300')->group(function () {
 
     // Welcome
     Route::get('/', function () {
@@ -43,4 +43,21 @@ Route::prefix('v1')->group(function () {
         Route::get('/years', [HolidayController::class, 'years']);
         Route::get('/year/{year}', [HolidayController::class, 'year']);
     });
+
+
+    Route::get('/health', function () {
+    $checks = [
+        'database' => \DB::connection()->getPdo() ? 'ok' : 'down',
+        'cache'    => \Cache::has('health_check') || \Cache::put('health_check', true, 60) ? 'ok' : 'down',
+    ];
+
+    $healthy = ! in_array('down', $checks);
+
+    return \App\Http\Responses\ApiResponse::success([
+        'status'  => $healthy ? 'healthy' : 'unhealthy',
+        'checks'  => $checks,
+        'version' => '1.0.0',
+        'time'    => now()->toIso8601String(),
+    ], 'Health check.', $healthy ? 200 : 503);
+})->withoutMiddleware('cache.api');
 });
