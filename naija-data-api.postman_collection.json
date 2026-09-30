@@ -1,0 +1,206 @@
+{
+  "info": {
+    "name": "Naija Data API",
+    "description": "Nigerian states, LGAs, banks, and public holidays API.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000/api/v1",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Welcome",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/",
+          "host": ["{{base_url}}"],
+          "path": [""]
+        }
+      }
+    },
+    {
+      "name": "States",
+      "item": [
+        {
+          "name": "List all states",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/states",
+              "host": ["{{base_url}}"],
+              "path": ["states"]
+            }
+          }
+        },
+        {
+          "name": "List states (filter by region)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/states?region=South South",
+              "host": ["{{base_url}}"],
+              "path": ["states"],
+              "query": [
+                { "key": "region", "value": "South South" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List states (search)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/states?search=lagos",
+              "host": ["{{base_url}}"],
+              "path": ["states"],
+              "query": [
+                { "key": "search", "value": "lagos" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get state by code",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/states/RIV",
+              "host": ["{{base_url}}"],
+              "path": ["states", "RIV"]
+            }
+          }
+        },
+        {
+          "name": "Get state by slug",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/states/lagos",
+              "host": ["{{base_url}}"],
+              "path": ["states", "lagos"]
+            }
+          }
+        },
+        {
+          "name": "Get LGAs of a state",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/states/RIV/lgas",
+              "host": ["{{base_url}}"],
+              "path": ["states", "RIV", "lgas"]
+            }
+          }
+        },
+        {
+          "name": "List regions",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/states/regions",
+              "host": ["{{base_url}}"],
+              "path": ["states", "regions"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Banks",
+      "item": [
+        {
+          "name": "List all banks",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/banks",
+              "host": ["{{base_url}}"],
+              "path": ["banks"]
+            }
+          }
+        },
+        {
+          "name": "List banks (filter by type)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/banks?type=microfinance",
+              "host": ["{{base_url}}"],
+              "path": ["banks"],
+              "query": [
+                { "key": "type", "value": "microfinance" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get bank by code",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/banks/044",
+              "host": ["{{base_url}}"],
+              "path": ["banks", "044"]
+            }
+          }
+        },
+        {
+          "name": "List bank types",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/banks/types",
+              "host": ["{{base_url}}"],
+              "path": ["banks", "types"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Holidays",
+      "item": [
+        {
+          "name": "List all holidays",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/holidays",
+              "host": ["{{base_url}}"],
+              "path": ["holidays"]
+            }
+          }
+        },
+        {
+          "name": "Holidays for a year",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/holidays/year/2026",
+              "host": ["{{base_url}}"],
+              "path": ["holidays", "year", "2026"]
+            }
+          }
+        },
+        {
+          "name": "List available years",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/holidays/years",
+              "host": ["{{base_url}}"],
+              "path": ["holidays", "years"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
