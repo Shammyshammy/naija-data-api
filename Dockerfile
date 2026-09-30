@@ -4,7 +4,7 @@ RUN apt-get update && apt-get install -y \
     git curl zip unzip libzip-dev libonig-dev libxml2-dev \
     && rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-install pdo_mysql mbstring zip bcmath ctype fileinfo tokenizer xml
+RUN docker-php-ext-install pdo_mysql mbstring zip bcmath ctype fileinfo xml
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
