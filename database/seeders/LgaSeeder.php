@@ -53,16 +53,15 @@ class LgaSeeder extends Seeder
         ];
 
         foreach ($data as $stateCode => $lgaNames) {
-            $state = State::where('code', $stateCode)->first();
-            if (! $state) continue;
+    $state = State::where('code', $stateCode)->first();
+    if (! $state) continue;
 
-            foreach ($lgaNames as $name) {
-                Lga::create([
-                    'state_id' => $state->id,
-                    'name'     => $name,
-                    'slug'     => Str::slug($name),
-                ]);
-            }
-        }
+    foreach ($lgaNames as $name) {
+        Lga::updateOrCreate(
+            ['state_id' => $state->id, 'name' => $name],
+            ['slug' => Str::slug($name)]
+        );
+    }
+}
     }
 }

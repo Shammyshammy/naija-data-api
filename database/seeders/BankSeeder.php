@@ -51,13 +51,15 @@ class BankSeeder extends Seeder
         ];
 
         foreach ($banks as $b) {
-            Bank::create([
-                'name'      => $b[0],
-                'slug'      => Str::slug($b[0]),
-                'code'      => $b[1],
-                'type'      => $b[2],
-                'is_active' => true,
-            ]);
-        }
+    Bank::updateOrCreate(
+        ['code' => $b[1]],
+        [
+            'name'      => $b[0],
+            'slug'      => Str::slug($b[0]),
+            'type'      => $b[2],
+            'is_active' => true,
+        ]
+    );
+}
     }
 }

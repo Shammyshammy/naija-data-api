@@ -42,13 +42,13 @@ class HolidaySeeder extends Seeder
         ];
 
         foreach ($holidays as $h) {
-            Holiday::create([
-                'year'        => $h[0],
-                'date'        => $h[0] . '-' . $h[1],
-                'name'        => $h[2],
-                'type'        => $h[3],
-                'description' => $h[4],
-            ]);
-        }
+    Holiday::updateOrCreate(
+        ['year' => $h[0], 'date' => $h[0] . '-' . $h[1], 'name' => $h[2]],
+        [
+            'type'        => $h[3],
+            'description' => $h[4],
+        ]
+    );
+}
     }
 }

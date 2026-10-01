@@ -52,16 +52,18 @@ class StateSeeder extends Seeder
         ];
 
         foreach ($states as $s) {
-            State::create([
-                'name'      => $s[0],
-                'slug'      => Str::slug($s[0]),
-                'code'      => $s[1],
-                'capital'   => $s[2],
-                'region'    => $s[3],
-                'lga_count' => $s[4],
-                'latitude'  => $s[5],
-                'longitude' => $s[6],
-            ]);
-        }
+    State::updateOrCreate(
+        ['code' => $s[1]],
+        [
+            'name'      => $s[0],
+            'slug'      => Str::slug($s[0]),
+            'capital'   => $s[2],
+            'region'    => $s[3],
+            'lga_count' => $s[4],
+            'latitude'  => $s[5],
+            'longitude' => $s[6],
+        ]
+    );
+}
     }
 }
