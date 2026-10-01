@@ -6,11 +6,14 @@ RUN apt-get update && apt-get install -y \
 
 RUN docker-php-ext-install pdo_mysql mbstring zip bcmath ctype fileinfo xml
 
-# Enable Apache mod_rewrite for Laravel routing
 RUN a2enmod rewrite
 
 # Set DocumentRoot to /app/public
 RUN sed -i 's|/var/www/html|/app/public|g' /etc/apache2/sites-available/000-default.conf
+
+# Make Apache listen on 8080 for Railway
+RUN sed -i 's/Listen 80/Listen 8080/g' /etc/apache2/ports.conf
+RUN sed -i 's/:80/:8080/g' /etc/apache2/sites-available/000-default.conf
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
@@ -26,6 +29,6 @@ RUN composer dump-autoload --optimize
 RUN mkdir -p storage/framework/{sessions,views,cache} storage/logs bootstrap/cache \
   && chmod -R a+rw storage bootstrap/cache
 
-EXPOSE 8000
+EXPOSE 8080
 
-CMD ["sh", "-c", "php artisan optimize:clear && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=$PORT"]
+CMD ["sh", "-c", "php artisan optimize:clear && php artisan migrate --force && apache2-foreground"]
