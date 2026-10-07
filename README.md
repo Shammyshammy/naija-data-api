@@ -2,23 +2,21 @@
 
 ![Tests](https://github.com/Shammyshammy/naija-data-api/actions/workflows/tests.yml/badge.svg)
 
-A free, open-source REST API for Nigerian data; states, LGAs, banks, and public holidays. Built with **Laravel 13** and documented with **OpenAPI** (Scalar).
+A free, open-source REST API for Nigerian data — states, LGAs, banks, and public holidays. Built with **Laravel 13** and documented with **OpenAPI** (Scalar).
 
-## 🔗 Live API
-
-- **Base URL:** `https://comin-soonnn.com/api/v1`
-- **Interactive docs:** `https://comin-soonnn.com/docs/api`
+> **Status:** Runs locally. Deployment coming later.
 
 ## ✨ Features
 
 - 🗺️ **37 states** — all 36 states + FCT, with capital, region, coordinates
-- 🏘️ **185 LGAs** (5 per state; expanding to all 774)
+- 🏘️ **774 LGAs** — the complete list, correctly grouped by state
 - 🏦 **35 banks** — commercial, microfinance, non-interest, merchant
 - 📅 **Public holidays** — 2026 and 2027, with type and description
 - ⚡ **Rate limiting** — 60 requests/minute per IP
 - 🚀 **Response caching** — 5-minute cache on all GETs
 - 📖 **Auto-generated docs** at `/docs/api` (Scalar UI)
-- ✅ **28 automated tests** running on every push
+- ✅ **33 automated tests** running on every push
+- 🛡️ **Idempotent seeders** — safe to run repeatedly without crashes
 
 ## 🚀 Endpoints
 
@@ -102,14 +100,16 @@ Errors follow the same shape:
 
 ## 🧪 Example Usage
 
+Once you run `php artisan serve` locally, try these:
+
 ### cURL
 ```bash
-curl https://comin-soonnn.com/api/v1/states/RIV
+curl http://127.0.0.1:8000/api/v1/states/RIV
 ```
 
 ### JavaScript
 ```javascript
-const response = await fetch('https://comin-soonnn.com/api/v1/states/RIV');
+const response = await fetch('http://127.0.0.1:8000/api/v1/states/RIV');
 const { data } = await response.json();
 console.log(data.name, data.capital);
 ```
@@ -118,7 +118,7 @@ console.log(data.name, data.capital);
 ```python
 import requests
 
-response = requests.get('https://comin-soonnn.com/api/v1/states/RIV')
+response = requests.get('http://127.0.0.1:8000/api/v1/states/RIV')
 state = response.json()['data']
 print(f"{state['name']} — capital: {state['capital']}")
 ```
@@ -158,19 +158,42 @@ php artisan serve
 - API: `http://127.0.0.1:8000/api/v1`
 - Docs: `http://127.0.0.1:8000/docs/api`
 
+## 📁 Project Structure
+
+```
+app/
+├── Http/
+│   ├── Controllers/Api/V1/    Endpoint controllers
+│   └── Responses/             ApiResponse envelope
+└── Models/                    State, Lga, Bank, Holiday
+
+database/
+├── data/lgas.php              Full 774 LGAs dataset
+├── migrations/                All schema
+└── seeders/                   Idempotent seeders
+
+routes/
+└── api.php                    All v1 endpoints
+
+tests/Feature/Api/             33 feature tests
+```
+
 ## 🧪 Testing
 
 ```bash
 php artisan test
 ```
 
+Runs 33 tests covering all endpoints, filters, pagination, response envelope, and rate limits.
+
 ## 📝 Roadmap
 
-- [ ] Complete all 774 LGAs
+- [x] Complete all 774 LGAs
 - [ ] Add more banks (fintech, mobile money)
 - [ ] Add airports and their codes
 - [ ] Add Nigerian universities
 - [ ] Add political wards
+- [ ] Deploy a public instance
 - [ ] API key support for higher rate limits
 
 ## 📝 License
