@@ -10,6 +10,12 @@ class BankSeeder extends Seeder
 {
     public function run(): void
     {
+
+    if (Bank::count() > 0) {
+    $this->command->info('Banks already seeded. Skipping.');
+    return;
+}
+
         $banks = [
             // [name, CBN code, type]
             ['Access Bank',                  '044', 'commercial'],

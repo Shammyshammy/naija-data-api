@@ -10,6 +10,11 @@ class StateSeeder extends Seeder
 {
     public function run(): void
     {
+
+    if (State::count() > 0) {
+    $this->command->info('States already seeded. Skipping.');
+    return;
+}
         $states = [
             // [name, code, capital, region, lga_count, lat, lng]
             ['Abia',        'ABI', 'Umuahia',     'South East', 17, 5.4527, 7.5248],

@@ -10,6 +10,12 @@ class HolidaySeeder extends Seeder
 {
     public function run(): void
     {
+
+    if (Holiday::count() > 0) {
+    $this->command->info('Holidays already seeded. Skipping.');
+    return;
+}
+
         $holidays = [
             // 2026
             [2026, '01-01', "New Year's Day",                'public',    'First day of the year'],
