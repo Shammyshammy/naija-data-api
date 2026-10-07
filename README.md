@@ -186,15 +186,6 @@ php artisan test
 
 Runs 33 tests covering all endpoints, filters, pagination, response envelope, and rate limits.
 
-## 📝 Roadmap
-
-- [x] Complete all 774 LGAs
-- [ ] Add more banks (fintech, mobile money)
-- [ ] Add airports and their codes
-- [ ] Add Nigerian universities
-- [ ] Add political wards
-- [ ] Deploy a public instance
-- [ ] API key support for higher rate limits
 
 ## 📝 License
 
